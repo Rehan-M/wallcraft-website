@@ -5,7 +5,7 @@ import { Link } from '../Common/Router';
 export default function Header({ currentPage }) {
   const [galleryDropdownOpen, setGalleryDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
