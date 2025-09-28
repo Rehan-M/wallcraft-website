@@ -1,0 +1,109 @@
+/* Subtle gradient animation for headings */
+.gradient-animate {
+    background: linear-gradient(90deg, #9333ea, #db2777, #9333ea);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 3s ease infinite;
+  }
+  
+  @keyframes gradient {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  
+  /* Professional hover effect for cards */
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(147, 51, 234, 0.2);
+  }
+  
+  /* Smooth image zoom for gallery */
+  .img-zoom {
+    transition: transform 0.5s ease;
+  }
+  
+  .img-zoom:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Subtle shimmer for CTA buttons */
+  .shimmer-btn {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+  }
+  
+  .shimmer-btn:hover::before {
+    left: 100%;
+  }
+  /* Previous styles... (keep all the previous ones) */
+
+/* Image zoom effect for gallery */
+.img-zoom {
+    transition: transform 0.5s ease;
+    will-change: transform;
+  }
+  
+  .group:hover .img-zoom {
+    transform: scale(1.1);
+  }
+  
+  /* Lightbox animations */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .animate-scale-up {
+    animation: scaleUp 0.3s ease-out;
+  }
+  
+  @keyframes scaleUp {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out 0.2s both;
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
