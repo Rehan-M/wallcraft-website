@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronDown, Menu, X, PaintBucket } from 'lucide-react';
-import { Link } from 'react-router-dom';  // ✅ use react-router-dom instead of ../Common/Router
+import React, { useState, useEffect } from "react";
+import { ChevronDown, Menu, X, PaintBucket } from "lucide-react";
+import { Link } from "react-router-dom"; // ✅ use react-router-dom
 
-export default function Header({ currentPage }) {
+export default function Header() {
   const [galleryDropdownOpen, setGalleryDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false); // ✅ FIX added
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-lg' : 'bg-transparent'
+        scrolled ? "bg-white shadow-lg" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo Section */}
+          {/* Logo */}
           <Link to="/home" className="flex items-center gap-2 cursor-pointer">
             <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-2 rounded-lg">
               <PaintBucket className="w-6 h-6 text-white" />
@@ -33,27 +33,10 @@ export default function Header({ currentPage }) {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link
-              to="/home"
-              className="px-4 py-2 text-lg hover:text-pink-600 transition-colors"
-              style={{
-                color: currentPage === 'home' ? '#db2777' : '#9333ea',
-                fontWeight: '500',
-                textDecoration: 'none',
-              }}
-            >
+            <Link to="/home" className="px-4 py-2 text-lg hover:text-pink-600 transition-colors">
               HOME
             </Link>
-
-            <Link
-              to="/about"
-              className="px-4 py-2 text-lg hover:text-pink-600 transition-colors"
-              style={{
-                color: currentPage === 'about' ? '#db2777' : '#9333ea',
-                fontWeight: '500',
-                textDecoration: 'none',
-              }}
-            >
+            <Link to="/about" className="px-4 py-2 text-lg hover:text-pink-600 transition-colors">
               ABOUT
             </Link>
 
@@ -66,85 +49,36 @@ export default function Header({ currentPage }) {
               <Link
                 to="/gallery"
                 className="px-4 py-2 text-lg hover:text-pink-600 transition-colors flex items-center gap-1"
-                style={{
-                  color: currentPage?.includes('gallery') ? '#db2777' : '#9333ea',
-                  fontWeight: '500',
-                  display: 'flex',
-                  textDecoration: 'none',
-                }}
               >
                 GALLERY
                 <ChevronDown className="w-4 h-4" />
               </Link>
 
-              {/* Dropdown Menu */}
               {galleryDropdownOpen && (
                 <div
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    marginTop: '4px',
-                    backgroundColor: 'white',
-                    border: '2px solid #db2777',
-                    borderRadius: '8px',
-                    boxShadow: '0 10px 25px rgba(219, 39, 119, 0.2)',
-                    width: '250px',
-                    zIndex: 1000,
-                  }}
+                  className="absolute top-full left-0 mt-1 bg-white border-2 border-pink-500 rounded-lg shadow-xl w-60 z-50"
                 >
                   <Link
                     to="/gallery"
-                    style={{
-                      display: 'block',
-                      padding: '12px 16px',
-                      color: '#9333ea',
-                      fontWeight: '500',
-                      textDecoration: 'none',
-                      borderRadius: '6px 6px 0 0',
-                    }}
+                    className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
                   >
                     All Gallery
                   </Link>
-
-                  <div style={{ borderTop: '2px solid #f9a8d4' }}></div>
-
                   <Link
                     to="/gallery-fluted"
-                    style={{
-                      display: 'block',
-                      padding: '12px 16px',
-                      color: '#9333ea',
-                      fontWeight: '500',
-                      textDecoration: 'none',
-                    }}
+                    className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
                   >
                     Fluted Panel Designs
                   </Link>
-
                   <Link
                     to="/gallery-pvc"
-                    style={{
-                      display: 'block',
-                      padding: '12px 16px',
-                      color: '#9333ea',
-                      fontWeight: '500',
-                      textDecoration: 'none',
-                    }}
+                    className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
                   >
                     PVC Panel Designs
                   </Link>
-
                   <Link
                     to="/gallery-wainscoting"
-                    style={{
-                      display: 'block',
-                      padding: '12px 16px',
-                      color: '#9333ea',
-                      fontWeight: '500',
-                      textDecoration: 'none',
-                      borderRadius: '0 0 6px 6px',
-                    }}
+                    className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
                   >
                     Wainscoting Designs
                   </Link>
@@ -152,27 +86,10 @@ export default function Header({ currentPage }) {
               )}
             </div>
 
-            <Link
-              to="/services"
-              className="px-4 py-2 text-lg hover:text-pink-600 transition-colors"
-              style={{
-                color: currentPage === 'services' ? '#db2777' : '#9333ea',
-                fontWeight: '500',
-                textDecoration: 'none',
-              }}
-            >
+            <Link to="/services" className="px-4 py-2 text-lg hover:text-pink-600 transition-colors">
               SERVICES
             </Link>
-
-            <Link
-              to="/contact"
-              className="px-4 py-2 text-lg hover:text-pink-600 transition-colors"
-              style={{
-                color: currentPage === 'contact' ? '#db2777' : '#9333ea',
-                fontWeight: '500',
-                textDecoration: 'none',
-              }}
-            >
+            <Link to="/contact" className="px-4 py-2 text-lg hover:text-pink-600 transition-colors">
               CONTACT
             </Link>
           </div>
@@ -190,34 +107,19 @@ export default function Header({ currentPage }) {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-          <Link
-            to="/home"
-            className="block w-full text-left px-4 py-3 font-medium text-purple-600 hover:bg-purple-50 hover:text-pink-600 transition-colors"
-          >
+          <Link to="/home" className="block px-4 py-3 text-purple-600 hover:bg-purple-50 hover:text-pink-600">
             Home
           </Link>
-          <Link
-            to="/about"
-            className="block w-full text-left px-4 py-3 font-medium text-purple-600 hover:bg-purple-50 hover:text-pink-600 transition-colors"
-          >
+          <Link to="/about" className="block px-4 py-3 text-purple-600 hover:bg-purple-50 hover:text-pink-600">
             About
           </Link>
-          <Link
-            to="/gallery"
-            className="block w-full text-left px-4 py-3 font-medium text-purple-600 hover:bg-purple-50 hover:text-pink-600 transition-colors"
-          >
+          <Link to="/gallery" className="block px-4 py-3 text-purple-600 hover:bg-purple-50 hover:text-pink-600">
             Gallery
           </Link>
-          <Link
-            to="/services"
-            className="block w-full text-left px-4 py-3 font-medium text-purple-600 hover:bg-purple-50 hover:text-pink-600 transition-colors"
-          >
+          <Link to="/services" className="block px-4 py-3 text-purple-600 hover:bg-purple-50 hover:text-pink-600">
             Services
           </Link>
-          <Link
-            to="/contact"
-            className="block w-full text-left px-4 py-3 font-medium text-purple-600 hover:bg-purple-50 hover:text-pink-600 transition-colors"
-          >
+          <Link to="/contact" className="block px-4 py-3 text-purple-600 hover:bg-purple-50 hover:text-pink-600">
             Contact
           </Link>
         </div>
