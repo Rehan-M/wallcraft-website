@@ -2,35 +2,29 @@
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-require("dotenv").config(); // load .env variables
+require("dotenv").config();
 
 const app = express();
 
-// ✅ Allowed frontend origins
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://wallcraft-website.netlify.app", // update if your actual domain differs
-  "https://wallcraft-site.netlify.app"
-];
-
+// ✅ Enable CORS for Netlify + local dev
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log("❌ Blocked by CORS:", origin);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST"],
+    origin: [
+      "http://localhost:3000",
+      "https://wallcraft-website.netlify.app",
+    ],
+    methods: ["GET", "POST", "OPTIONS"], // allow preflight
     allowedHeaders: ["Content-Type"],
+    credentials: false, // no cookies
   })
 );
 
+// ✅ Explicitly handle OPTIONS (preflight) requests
+app.options("*", cors());
+
 app.use(express.json());
 
-// ✅ Contact form endpoint
+// Contact form endpoint
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, service, message } = req.body;
 
@@ -42,8 +36,8 @@ app.post("/api/contact", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER, // stored in Render environment
-        pass: process.env.EMAIL_PASS, // stored in Render environment
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
@@ -68,10 +62,11 @@ app.post("/api/contact", async (req, res) => {
   }
 });
 
-// ✅ Start server
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`🚀 Server running at http://localhost:${PORT}`)
 );
+
 
 
