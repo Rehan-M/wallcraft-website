@@ -2,19 +2,35 @@
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-require("dotenv").config();   // load .env variables
+require("dotenv").config(); // load .env variables
 
 const app = express();
 
-// Allow React frontend to talk to backend
-app.use(cors({
-  origin:  ["http://localhost:3000", "https://your-frontend-site.netlify.app"],
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"]
-}));
+// ✅ Allowed frontend origins
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://wallcraft-website.netlify.app", // update if your actual domain differs
+  "https://wallcraft-site.netlify.app"
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("❌ Blocked by CORS:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 app.use(express.json());
 
+// ✅ Contact form endpoint
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, service, message } = req.body;
 
@@ -26,39 +42,36 @@ app.post("/api/contact", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      
-      
+        user: process.env.EMAIL_USER, // stored in Render environment
+        pass: process.env.EMAIL_PASS, // stored in Render environment
       },
     });
 
-    transporter.sendMail({
+    await transporter.sendMail({
       from: `"${name}" <${email}>`,
       to: "info@newage-store.com",
-      subject: `New Contact Form Message: ${service}`,
+      subject: `New Contact Form Message: ${service || "General Inquiry"}`,
       text: `
         Name: ${name}
         Email: ${email}
-        Phone: ${phone}
-        Service: ${service}
+        Phone: ${phone || "N/A"}
+        Service: ${service || "N/A"}
         Message: ${message}
       `,
-    }, (err, info) => {
-      if (err) {
-        console.error("❌ Email failed:", err);
-        return res.status(500).json({ error: "Failed to send email", details: err });
-      } else {
-        console.log("✅ Email sent:", info.response);
-        return res.json({ success: true });
-      }
     });
 
-  } catch (error) {
-    console.error("Email error:", error);
-    res.status(500).json({ error: "Failed to send message" });
+    console.log("✅ Email sent successfully!");
+    res.json({ success: true, message: "Message sent successfully!" });
+  } catch (err) {
+    console.error("❌ Email failed:", err);
+    res.status(500).json({ error: "Failed to send email", details: err.message });
   }
 });
+
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Server running at http://localhost:${PORT}`)
+);
+
 
