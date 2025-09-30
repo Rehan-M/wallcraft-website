@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown, Menu, X, PaintBucket } from "lucide-react";
-import { Link } from "react-router-dom"; // ✅ use react-router-dom
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [galleryDropdownOpen, setGalleryDropdownOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/home" className="flex items-center gap-2 cursor-pointer">
+          <Link to="/" className="flex items-center gap-2 cursor-pointer">
             <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-2 rounded-lg">
               <PaintBucket className="w-6 h-6 text-white" />
             </div>
@@ -33,7 +33,7 @@ export default function Header() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="/home" className="px-4 py-2 text-lg hover:text-pink-600 transition-colors">
+            <Link to="/" className="px-4 py-2 text-lg hover:text-pink-600 transition-colors">
               HOME
             </Link>
             <Link to="/about" className="px-4 py-2 text-lg hover:text-pink-600 transition-colors">
@@ -55,9 +55,7 @@ export default function Header() {
               </Link>
 
               {galleryDropdownOpen && (
-                <div
-                  className="absolute top-full left-0 mt-1 bg-white border-2 border-pink-500 rounded-lg shadow-xl w-60 z-50"
-                >
+                <div className="absolute top-full left-0 mt-1 bg-white border-2 border-pink-500 rounded-lg shadow-xl w-60 z-50">
                   <Link
                     to="/gallery"
                     className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
@@ -107,7 +105,7 @@ export default function Header() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-          <Link to="/home" className="block px-4 py-3 text-purple-600 hover:bg-purple-50 hover:text-pink-600">
+          <Link to="/" className="block px-4 py-3 text-purple-600 hover:bg-purple-50 hover:text-pink-600">
             Home
           </Link>
           <Link to="/about" className="block px-4 py-3 text-purple-600 hover:bg-purple-50 hover:text-pink-600">
@@ -127,3 +125,4 @@ export default function Header() {
     </nav>
   );
 }
+
