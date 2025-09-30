@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Star, Palette, Layers, Shield, Sparkles } from 'lucide-react';
-import { Link } from "react-router-dom"; // ✅ FIXED import
-import '../elegantAnimations.css'; // Import the animation CSS file
+import { Link } from "react-router-dom";   // ✅ Correct import
+import '../elegantAnimations.css';
 
 export default function HomePage() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -44,86 +44,70 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section with Animations */}
+      {/* Hero Section */}
       <div className="relative h-screen overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-teal-900 opacity-90"></div>
-        
-        {/* Subtle Animated Background Orbs */}
+
+        {/* Background orbs */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-r from-pink-500 to-yellow-500 rounded-full opacity-20 blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-blue-500 to-green-500 rounded-full opacity-20 blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
         </div>
-        
+
         <div className="relative z-10 h-full flex items-center justify-center px-4">
           <div className="text-center text-white max-w-4xl">
-            {/* Animated Heading */}
             <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-animate">
               Transform Your Walls
             </h1>
-            <p 
-              className="text-xl md:text-2xl mb-8"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
+            <p className="text-xl md:text-2xl mb-8">
               Innovative designs that bring life to your spaces
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link 
-                to="/gallery"   // ✅ FIXED
-                className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold shadow-2xl hover:shadow-pink-500/50 text-white transition-all duration-300 hover:scale-105 shimmer-btn"
-                data-aos="fade-up"
-                data-aos-delay="400"
-              >
+              <Link to="/gallery" className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold shadow-2xl hover:shadow-pink-500/50 text-white transition-all duration-300 hover:scale-105 shimmer-btn">
                 Explore Gallery
               </Link>
-              <Link 
-                to="/contact"   // ✅ FIXED
-                className="px-8 py-4 bg-transparent border-2 border-white rounded-full font-semibold hover:bg-white hover:text-purple-900 transition-all duration-300 hover:scale-105"
-                data-aos="fade-up"
-                data-aos-delay="500"
-              >
+              <Link to="/contact" className="px-8 py-4 bg-transparent border-2 border-white rounded-full font-semibold hover:bg-white hover:text-purple-900 transition-all duration-300 hover:scale-105">
                 Get Quote
               </Link>
             </div>
           </div>
         </div>
-        
-        {/* Animated Scroll Indicator */}
+
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDown className="w-8 h-8 text-white" />
         </div>
       </div>
 
-      {/* Animated Counters Section */}
+      {/* Counters */}
       <div className="py-20 bg-gradient-to-r from-purple-600 to-pink-600">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center text-white" data-aos="fade-up" data-aos-duration="800">
+          <div className="text-center text-white">
             <div className="text-5xl font-bold mb-2">{counters.projects}+</div>
             <div className="text-xl">Projects Completed</div>
           </div>
-          <div className="text-center text-white" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
+          <div className="text-center text-white">
             <div className="text-5xl font-bold mb-2">{counters.years}+</div>
             <div className="text-xl">Years Experience</div>
           </div>
-          <div className="text-center text-white" data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
+          <div className="text-center text-white">
             <div className="text-5xl font-bold mb-2">{counters.clients}+</div>
             <div className="text-xl">Happy Clients</div>
           </div>
         </div>
       </div>
 
-      {/* Services Section */}
+      {/* Services */}
       <div className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 gradient-animate" data-aos="fade-up">
+          <h2 className="text-4xl font-bold text-center mb-12 gradient-animate">
             Our Services
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, idx) => (
-              <div key={idx} className="group relative" data-aos="fade-up" data-aos-delay={idx * 100}>
+              <div key={idx} className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl blur-xl from-purple-500 to-pink-500"></div>
-                <div className="relative bg-white p-6 rounded-2xl shadow-lg hover-lift">
-                  <div className={`bg-gradient-to-r ${service.color} p-3 rounded-xl inline-block mb-4 text-white transform group-hover:scale-110 transition-transform duration-300`}>
+                <div className="relative bg-white p-6 rounded-2xl shadow-lg">
+                  <div className={`bg-gradient-to-r ${service.color} p-3 rounded-xl inline-block mb-4 text-white`}>
                     {service.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
@@ -133,32 +117,21 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Link 
-              to="/services"   // ✅ FIXED
-              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 inline-block shimmer-btn"
-              data-aos="fade-up"
-            >
+            <Link to="/services" className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 inline-block shimmer-btn">
               View All Services
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Testimonials Section */}
+      {/* Testimonials */}
       <div className="py-20 bg-gradient-to-br from-purple-100 to-pink-100">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12" data-aos="fade-up">
-            Client Testimonials
-          </h2>
+          <h2 className="text-4xl font-bold text-center mb-12">Client Testimonials</h2>
           <div className="relative h-48">
             {testimonials.map((testimonial, idx) => (
-              <div
-                key={idx}
-                className={`absolute inset-0 transition-all duration-500 ${
-                  idx === activeTestimonial ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-95'
-                }`}
-              >
-                <div className="bg-white p-8 rounded-2xl shadow-xl text-center hover-lift">
+              <div key={idx} className={`absolute inset-0 transition-all duration-500 ${idx === activeTestimonial ? 'opacity-100' : 'opacity-0'}`}>
+                <div className="bg-white p-8 rounded-2xl shadow-xl text-center">
                   <div className="flex justify-center mb-4">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -173,21 +146,12 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* CTA Section */}
+      {/* CTA */}
       <div className="py-20 bg-gradient-to-r from-purple-600 to-pink-600">
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h2 className="text-4xl font-bold mb-4" data-aos="zoom-in">
-            Ready to Transform Your Space?
-          </h2>
-          <p className="text-xl mb-8" data-aos="fade-up" data-aos-delay="200">
-            Get a free consultation and quote today!
-          </p>
-          <Link 
-            to="/contact"   // ✅ FIXED
-            className="px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:shadow-lg transform hover:scale-110 transition-all duration-300 inline-block shimmer-btn"
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
+          <h2 className="text-4xl font-bold mb-4">Ready to Transform Your Space?</h2>
+          <p className="text-xl mb-8">Get a free consultation and quote today!</p>
+          <Link to="/contact" className="px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:shadow-lg transform hover:scale-110 transition-all duration-300 inline-block shimmer-btn">
             Get Started Now
           </Link>
         </div>
@@ -195,3 +159,4 @@ export default function HomePage() {
     </div>
   );
 }
+
