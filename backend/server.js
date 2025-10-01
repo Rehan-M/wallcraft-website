@@ -12,6 +12,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://wallcraft-website.netlify.app",
+      "https://wallcraft-store.netlify.app",
     ],
     methods: ["GET", "POST", "OPTIONS"], // allow preflight
     allowedHeaders: ["Content-Type"],
