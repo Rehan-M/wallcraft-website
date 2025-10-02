@@ -2,23 +2,28 @@
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-require("dotenv").config();
+require("dotenv").config(); // load .env variables
 
 const app = express();
 
-// ✅ Apply CORS globally (allow Netlify + local dev)
+// ✅ Allow frontend domain + localhost
 app.use(cors({
-  origin: ["http://localhost:3000", "https://wallcraft-website.netlify.app"],
+  origin: [
+    "http://localhost:3000",
+    "https://wallcraft-website.netlify.app"
+  ],
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
 
-// ✅ Handle preflight explicitly
-app.options("*", cors());
-
 app.use(express.json());
 
-// 📩 Contact API
+// ✅ Test route for debugging
+app.get("/api/test", (req, res) => {
+  res.json({ message: "✅ Backend is working!" });
+});
+
+// ✅ Contact form route
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, service, message } = req.body;
 
@@ -35,29 +40,37 @@ app.post("/api/contact", async (req, res) => {
       },
     });
 
-    await transporter.sendMail({
-      from: `"${name}" <${email}>`,
-      to: "info@newage-store.com", // change to your actual inbox
-      subject: `New Contact Form Message: ${service}`,
-      text: `
-        Name: ${name}
-        Email: ${email}
-        Phone: ${phone}
-        Service: ${service}
-        Message: ${message}
-      `,
-    });
-
-    console.log("✅ Email sent successfully!");
-    return res.json({ success: true });
-
-  } catch (err) {
-    console.error("❌ Email failed:", err);
-    return res.status(500).json({ error: "Failed to send email", details: err.message });
+    transporter.sendMail(
+      {
+        from: `"${name}" <${email}>`,
+        to: "info@newage-store.com", // 📌 your receiving email
+        subject: `New Contact Form Message: ${service}`,
+        text: `
+          Name: ${name}
+          Email: ${email}
+          Phone: ${phone}
+          Service: ${service}
+          Message: ${message}
+        `,
+      },
+      (err, info) => {
+        if (err) {
+          console.error("❌ Email failed:", err);
+          return res.status(500).json({ error: "Failed to send email", details: err });
+        } else {
+          console.log("✅ Email sent:", info.response);
+          return res.json({ success: true });
+        }
+      }
+    );
+  } catch (error) {
+    console.error("Email error:", error);
+    res.status(500).json({ error: "Failed to send message" });
   }
 });
 
-// ✅ Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
+// ✅ Important: DO NOT use `app.use("*", ...)`
+// That caused the path-to-regexp error.
 
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
