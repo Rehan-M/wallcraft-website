@@ -9,11 +9,14 @@ const app = express();
 // ✅ CORS configuration
 app.use(cors({
   origin: [
-    "https://wallcraft-website.netlify.app",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "https://wallcraft-website.netlify.app"
   ],
-  credentials: true,
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true
 }));
+
 
 app.use(express.json());
 
