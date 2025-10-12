@@ -36,38 +36,36 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
-    // Initialize Brevo API
-    let defaultClient = SibApiV3Sdk.ApiClient.instance;
-    let apiKey = defaultClient.authentications["api-key"];
+    // Initialize Brevo client
+    const defaultClient = SibApiV3Sdk.ApiClient.instance;
+    const apiKey = defaultClient.authentications["api-key"];
     apiKey.apiKey = process.env.BREVO_API_KEY;
 
-    const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+    const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
     const emailData = {
-      sender: { email: process.env.EMAIL_FROM, name: "WallCraft Website" },
-      to: [{ email: process.env.EMAIL_TO }],
+      sender: { email: "info@newage-store.com", name: "WallCraft Website" },
+      to: [{ email: "info@newage-store.com", name: "WallCraft Admin" }],
       subject: `New Contact Form Message: ${service || "General Inquiry"}`,
       htmlContent: `
-        <h3>New Contact Message</h3>
+        <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone || "N/A"}</p>
-        <p><strong>Service:</strong> ${service || "N/A"}</p>
-        <p><strong>Message:</strong><br>${message}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Service:</strong> ${service}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
       `,
     };
 
-    await apiInstance.sendTransacEmail(emailData);
-
-    console.log("✅ Email sent via Brevo");
-    res.json({ success: true, message: "Email sent successfully!" });
+    const response = await tranEmailApi.sendTransacEmail(emailData);
+    console.log("✅ Email sent successfully:", response);
+    res.json({ success: true });
   } catch (error) {
     console.error("❌ Email failed:", error);
     res.status(500).json({ error: "Failed to send email", details: error.message });
   }
 });
 
-// ✅ Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
-
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
