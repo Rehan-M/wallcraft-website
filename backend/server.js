@@ -2,32 +2,22 @@
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-const SibApiV3Sdk = require("sib-api-v3-sdk");
-require("dotenv").config();
+require("dotenv").config(); // Load environment variables
 
 const app = express();
 
-// ✅ Allow your frontend to communicate
+// ✅ Allow frontend requests from both local and Netlify builds
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://wallcraft-website.netlify.app",
-    ],
-    methods: ["GET", "POST", "OPTIONS"],
+    origin: ["http://localhost:3000", "https://wallcraft-website.netlify.app"],
+    methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
-    credentials: true,
   })
 );
 
 app.use(express.json());
 
-// ✅ Test route
-app.get("/", (req, res) => {
-  res.json({ message: "✅ Backend is working!" });
-});
-
-// ✅ Contact form route
+// ✅ Contact form endpoint
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, service, message } = req.body;
 
@@ -36,36 +26,43 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
-    // Initialize Brevo client
-    const defaultClient = SibApiV3Sdk.ApiClient.instance;
-    const apiKey = defaultClient.authentications["api-key"];
-    apiKey.apiKey = process.env.BREVO_API_KEY;
+    // ✅ Gmail SMTP transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER, // Your Gmail address
+        pass: process.env.EMAIL_PASS, // 16-character App Password
+      },
+    });
 
-    const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
-
-    const emailData = {
-      sender: { email: "info@newage-store.com", name: "WallCraft Website" },
-      to: [{ email: "info@newage-store.com", name: "WallCraft Admin" }],
+    // ✅ Email content
+    const mailOptions = {
+      from: `"${name}" <${email}>`,
+      to: process.env.EMAIL_TO || process.env.EMAIL_USER, // send to yourself
       subject: `New Contact Form Message: ${service || "General Inquiry"}`,
-      htmlContent: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Service:</strong> ${service}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
+      text: `
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Service: ${service}
+Message: ${message}
       `,
     };
 
-    const response = await tranEmailApi.sendTransacEmail(emailData);
-    console.log("✅ Email sent successfully:", response);
-    res.json({ success: true });
+    // ✅ Send the email
+    await transporter.sendMail(mailOptions);
+    console.log("✅ Email sent successfully!");
+    res.json({ success: true, message: "Message sent successfully!" });
   } catch (error) {
     console.error("❌ Email failed:", error);
-    res.status(500).json({ error: "Failed to send email", details: error.message });
+    res.status(500).json({ error: "Failed to send message", details: error.message });
   }
 });
 
+// ✅ Test endpoint for backend health
+app.get("/", (req, res) => {
+  res.json({ message: "✅ Backend is working!" });
+});
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
