@@ -23,12 +23,11 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
-            <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-2 rounded-lg">
-              <PaintBucket className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              WallCraft
-            </span>
+            <img 
+              src="https://i.imgur.com/fsAiunB.png" 
+              alt="WallCraft Logo" 
+              className="h-10 w-auto object-contain"
+          />
           </Link>
 
           {/* Desktop Menu */}
