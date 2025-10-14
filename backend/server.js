@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ Allow your frontend to connect
+// ✅ Allow Netlify + localhost access
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://wallcraft-website.netlify.app"],
@@ -17,7 +17,7 @@ app.use(
 
 app.use(express.json());
 
-// ✅ Contact form endpoint
+// ✅ Contact form route
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, service, message } = req.body;
 
@@ -26,12 +26,13 @@ app.post("/api/contact", async (req, res) => {
   }
 
   try {
-    // Initialize Brevo
+    // Configure Brevo client
     const defaultClient = SibApiV3Sdk.ApiClient.instance;
     defaultClient.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+
     const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
-    // ✅ 1️⃣ HTML template for the admin notification (you)
+    // ✅ Admin notification email (to you)
     const adminHtml = `
       <div style="background-color:#f9f9fb; padding:40px; font-family:Arial, sans-serif; color:#333;">
         <div style="max-width:600px; margin:auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
@@ -58,24 +59,44 @@ app.post("/api/contact", async (req, res) => {
       </div>
     `;
 
-    // ✅ 2️⃣ HTML template for user auto-reply
+    // ✅ User confirmation email (auto-reply)
     const userHtml = `
       <div style="background-color:#f9f9fb; padding:40px; font-family:Arial, sans-serif; color:#333;">
         <div style="max-width:600px; margin:auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-          <div style="background:linear-gradient(90deg, #7e22ce, #db2777); padding:20px 30px;">
-            <h1 style="margin:0; color:white; font-size:24px;">WallCraft</h1>
-            <p style="color:white; margin:4px 0 0 0; font-size:14px;">Thank you for contacting us!</p>
+          
+          <!-- Header with Logo -->
+          <div style="background:linear-gradient(90deg, #7e22ce, #db2777); padding:24px 30px; text-align:center;">
+            <img src="https://i.imgur.com/lzKybLM.png" alt="WallCraft Logo" style="height:60px; margin-bottom:10px;">
+            <h1 style="color:white; margin:0; font-size:22px;">Thank You for Contacting WallCraft</h1>
           </div>
+
+          <!-- Body -->
           <div style="padding:30px;">
             <p>Hi <strong>${name}</strong>,</p>
-            <p>Thank you for reaching out to <strong>WallCraft</strong>. We’ve received your message and one of our team members will contact you soon.</p>
-            <p style="margin-top:20px; font-style:italic;">Here’s a copy of what you sent us:</p>
+            <p>Thank you for reaching out to <strong>WallCraft</strong>! We’ve received your message and one of our specialists will contact you soon.</p>
+            
+            <p style="margin-top:20px; font-style:italic;">Here’s a copy of your message:</p>
             <blockquote style="border-left:4px solid #db2777; padding-left:12px; color:#555; margin-top:10px;">
               ${message}
             </blockquote>
-            <p style="margin-top:25px;">We appreciate your interest and look forward to working with you!</p>
+
+            <p style="margin-top:25px;">In the meantime, you can explore our gallery to see the latest panel designs and installations:</p>
+
+            <!-- CTA Button -->
+            <div style="text-align:center; margin:30px 0;">
+              <a href="https://wallcraft-website.netlify.app/gallery" 
+                style="background:linear-gradient(90deg, #7e22ce, #db2777); 
+                       color:white; text-decoration:none; padding:12px 28px; 
+                       border-radius:6px; font-weight:bold; display:inline-block;">
+                Visit Our Gallery
+              </a>
+            </div>
+
+            <p>We appreciate your interest and look forward to transforming your space.</p>
             <p>Warm regards,<br><strong>The WallCraft Team</strong></p>
           </div>
+
+          <!-- Footer -->
           <div style="background-color:#f3e8ff; text-align:center; padding:16px;">
             <p style="margin:0; font-size:13px; color:#6b21a8;">
               © ${new Date().getFullYear()} WallCraft • Designed with ❤️ in Canada
@@ -85,7 +106,7 @@ app.post("/api/contact", async (req, res) => {
       </div>
     `;
 
-    // ✅ Send email to admin
+    // ✅ Send admin email
     await tranEmailApi.sendTransacEmail({
       sender: { email: process.env.EMAIL_FROM, name: "WallCraft Website" },
       to: [{ email: process.env.EMAIL_TO }],
@@ -93,7 +114,7 @@ app.post("/api/contact", async (req, res) => {
       htmlContent: adminHtml,
     });
 
-    // ✅ Send auto-reply to user
+    // ✅ Send confirmation to user
     await tranEmailApi.sendTransacEmail({
       sender: { email: process.env.EMAIL_FROM, name: "WallCraft" },
       to: [{ email }],
@@ -101,20 +122,21 @@ app.post("/api/contact", async (req, res) => {
       htmlContent: userHtml,
     });
 
-    console.log("✅ Both emails sent successfully!");
-    res.json({ success: true, message: "Message and confirmation email sent!" });
+    console.log("✅ Admin + User confirmation emails sent successfully!");
+    res.json({ success: true, message: "Emails sent successfully!" });
   } catch (error) {
     console.error("❌ Email failed:", error);
     res.status(500).json({ error: "Failed to send message", details: error.message });
   }
 });
 
-// ✅ Health check route
+// ✅ Health route
 app.get("/", (req, res) => {
   res.json({ message: "✅ Backend is working!" });
 });
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
 
