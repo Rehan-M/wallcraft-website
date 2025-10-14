@@ -24,9 +24,9 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
             <img 
-              src="https://i.imgur.com/fsAiunB.png" 
+              src="/logo.png" 
               alt="WallCraft Logo" 
-              className="h-10 w-auto object-contain"
+              className="h-10 w-auto object-contain drop-shadow-md"
           />
           </Link>
 
