@@ -66,7 +66,7 @@ app.post("/api/contact", async (req, res) => {
           
           <!-- Header with Logo -->
           <div style="background:linear-gradient(90deg, #7e22ce, #db2777); padding:24px 30px; text-align:center;">
-            <img src="https://i.imgur.com/lzKybLM.png" alt="WallCraft Logo" style="height:60px; margin-bottom:10px;">
+            <img src="https://i.imgur.com/fsAiunB.png" alt="WallCraft Logo" style="height:60px; margin-bottom:10px;">
             <h1 style="color:white; margin:0; font-size:22px;">Thank You for Contacting WallCraft</h1>
           </div>
 
