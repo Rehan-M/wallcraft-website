@@ -1,42 +1,45 @@
 // server.js
 const express = require("express");
 const cors = require("cors");
-const SibApiV3Sdk = require("sib-api-v3-sdk");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
 
-// ✅ Allow Netlify + localhost access
-app.use(cors({
-  origin: [
-    "http://localhost:3000",              // keep if you want local development
-    "https://wallcraft-website.netlify.app", // optional but good to keep as backup
-    "https://wallcrafter.com"             // your live production domain
-  ],
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
-  credentials: true,
-}));
-
+// 🔓 CORS: allow all origins (simple + works for localhost + wallcrafter.com)
+app.use(cors());
+app.options("*", cors());
 
 app.use(express.json());
+
+// ✅ Health / root route
+app.get("/", (req, res) => {
+  res.json({ message: "✅ WallCrafter backend is working!" });
+});
+
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", time: new Date().toISOString() });
+});
 
 // ✅ Contact form route
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, service, message } = req.body;
 
+  // Basic validation
   if (!name || !email || !message) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
   try {
-    // Configure Brevo client
-    const defaultClient = SibApiV3Sdk.ApiClient.instance;
-    defaultClient.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+    // 🔐 Gmail SMTP transporter (uses app password)
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER, // e.g. info@newage-store.com
+        pass: process.env.EMAIL_PASS, // Gmail app password
+      },
+    });
 
-    const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
-
-    // ✅ Admin notification email (to you)
     const adminHtml = `
       <div style="background-color:#f9f9fb; padding:40px; font-family:Arial, sans-serif; color:#333;">
         <div style="max-width:600px; margin:auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
@@ -63,18 +66,15 @@ app.post("/api/contact", async (req, res) => {
       </div>
     `;
 
-    // ✅ User confirmation email (auto-reply)
     const userHtml = `
       <div style="background-color:#f9f9fb; padding:40px; font-family:Arial, sans-serif; color:#333;">
         <div style="max-width:600px; margin:auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-          
-          <!-- Header with Logo -->
+
           <div style="background:linear-gradient(90deg, #7e22ce, #db2777); padding:24px 30px; text-align:center;">
-            <img src="https://i.imgur.com/fsAiunB.png" alt="WallCrafter Logo" style="height:60px; margin-bottom:10px;">
+            <img src="https://wallcrafter.com/logo.png" alt="WallCrafter Logo" style="height:60px; margin-bottom:10px;">
             <h1 style="color:white; margin:0; font-size:22px;">Thank You for Contacting WallCrafter</h1>
           </div>
 
-          <!-- Body -->
           <div style="padding:30px;">
             <p>Hi <strong>${name}</strong>,</p>
             <p>Thank you for reaching out to <strong>WallCrafter</strong>! We’ve received your message and one of our specialists will contact you soon.</p>
@@ -86,11 +86,10 @@ app.post("/api/contact", async (req, res) => {
 
             <p style="margin-top:25px;">In the meantime, you can explore our gallery to see the latest panel designs and installations:</p>
 
-            <!-- CTA Button -->
             <div style="text-align:center; margin:30px 0;">
-              <a href="https://WallCrafter-website.netlify.app/gallery" 
-                style="background:linear-gradient(90deg, #7e22ce, #db2777); 
-                       color:white; text-decoration:none; padding:12px 28px; 
+              <a href="https://wallcrafter.com/gallery"
+                style="background:linear-gradient(90deg, #7e22ce, #db2777);
+                       color:white; text-decoration:none; padding:12px 28px;
                        border-radius:6px; font-weight:bold; display:inline-block;">
                 Visit Our Gallery
               </a>
@@ -100,7 +99,6 @@ app.post("/api/contact", async (req, res) => {
             <p>Warm regards,<br><strong>The WallCrafter Team</strong></p>
           </div>
 
-          <!-- Footer -->
           <div style="background-color:#f3e8ff; text-align:center; padding:16px;">
             <p style="margin:0; font-size:13px; color:#6b21a8;">
               © ${new Date().getFullYear()} WallCrafter • Designed with ❤️ in Canada
@@ -110,37 +108,35 @@ app.post("/api/contact", async (req, res) => {
       </div>
     `;
 
-    // ✅ Send admin email
-    await tranEmailApi.sendTransacEmail({
-      sender: { email: process.env.EMAIL_FROM, name: "WallCrafter Website" },
-      to: [{ email: process.env.EMAIL_TO }],
+    // 📩 Send to you (admin)
+    await transporter.sendMail({
+      from: `"WallCrafter Website" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_TO || process.env.EMAIL_USER,
       subject: `New Contact Form Message: ${service || "General Inquiry"}`,
-      htmlContent: adminHtml,
+      html: adminHtml,
     });
 
-    // ✅ Send confirmation to user
-    await tranEmailApi.sendTransacEmail({
-      sender: { email: process.env.EMAIL_FROM, name: "WallCrafter" },
-      to: [{ email }],
+    // 📩 Auto-reply to user
+    await transporter.sendMail({
+      from: `"WallCrafter" <${process.env.EMAIL_USER}>`,
+      to: email,
       subject: "We’ve received your message at WallCrafter!",
-      htmlContent: userHtml,
+      html: userHtml,
     });
 
-    console.log("✅ Admin + User confirmation emails sent successfully!");
+    console.log("✅ Admin + user emails sent");
     res.json({ success: true, message: "Emails sent successfully!" });
   } catch (error) {
     console.error("❌ Email failed:", error);
-    res.status(500).json({ error: "Failed to send message", details: error.message });
+    res.status(500).json({ error: "Failed to send message" });
   }
 });
 
-// ✅ Health route
-app.get("/", (req, res) => {
-  res.json({ message: "✅ Backend is working!" });
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
 
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
 
 
