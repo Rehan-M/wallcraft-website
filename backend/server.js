@@ -7,13 +7,17 @@ require("dotenv").config();
 const app = express();
 
 // ✅ Allow Netlify + localhost access
-app.use(
-  cors({
-    origin: ["http://localhost:3000", "https://wallcraft-website.netlify.app"],
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+app.use(cors({
+  origin: [
+    "http://localhost:3000",              // keep if you want local development
+    "https://wallcraft-website.netlify.app", // optional but good to keep as backup
+    "https://wallcrafter.com"             // your live production domain
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true,
+}));
+
 
 app.use(express.json());
 
@@ -37,7 +41,7 @@ app.post("/api/contact", async (req, res) => {
       <div style="background-color:#f9f9fb; padding:40px; font-family:Arial, sans-serif; color:#333;">
         <div style="max-width:600px; margin:auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
           <div style="background:linear-gradient(90deg, #7e22ce, #db2777); padding:20px 30px;">
-            <h1 style="margin:0; color:white; font-size:24px;">WallCraft</h1>
+            <h1 style="margin:0; color:white; font-size:24px;">WallCrafter</h1>
             <p style="color:white; margin:4px 0 0 0; font-size:14px;">New Contact Form Submission</p>
           </div>
           <div style="padding:30px;">
@@ -52,7 +56,7 @@ app.post("/api/contact", async (req, res) => {
           </div>
           <div style="background-color:#f3e8ff; text-align:center; padding:16px;">
             <p style="margin:0; font-size:13px; color:#6b21a8;">
-              © ${new Date().getFullYear()} WallCraft • Designed with ❤️ in Canada
+              © ${new Date().getFullYear()} WallCrafter • Designed with ❤️ in Canada
             </p>
           </div>
         </div>
@@ -66,14 +70,14 @@ app.post("/api/contact", async (req, res) => {
           
           <!-- Header with Logo -->
           <div style="background:linear-gradient(90deg, #7e22ce, #db2777); padding:24px 30px; text-align:center;">
-            <img src="https://i.imgur.com/fsAiunB.png" alt="WallCraft Logo" style="height:60px; margin-bottom:10px;">
-            <h1 style="color:white; margin:0; font-size:22px;">Thank You for Contacting WallCraft</h1>
+            <img src="https://i.imgur.com/fsAiunB.png" alt="WallCrafter Logo" style="height:60px; margin-bottom:10px;">
+            <h1 style="color:white; margin:0; font-size:22px;">Thank You for Contacting WallCrafter</h1>
           </div>
 
           <!-- Body -->
           <div style="padding:30px;">
             <p>Hi <strong>${name}</strong>,</p>
-            <p>Thank you for reaching out to <strong>WallCraft</strong>! We’ve received your message and one of our specialists will contact you soon.</p>
+            <p>Thank you for reaching out to <strong>WallCrafter</strong>! We’ve received your message and one of our specialists will contact you soon.</p>
             
             <p style="margin-top:20px; font-style:italic;">Here’s a copy of your message:</p>
             <blockquote style="border-left:4px solid #db2777; padding-left:12px; color:#555; margin-top:10px;">
@@ -84,7 +88,7 @@ app.post("/api/contact", async (req, res) => {
 
             <!-- CTA Button -->
             <div style="text-align:center; margin:30px 0;">
-              <a href="https://wallcraft-website.netlify.app/gallery" 
+              <a href="https://WallCrafter-website.netlify.app/gallery" 
                 style="background:linear-gradient(90deg, #7e22ce, #db2777); 
                        color:white; text-decoration:none; padding:12px 28px; 
                        border-radius:6px; font-weight:bold; display:inline-block;">
@@ -93,13 +97,13 @@ app.post("/api/contact", async (req, res) => {
             </div>
 
             <p>We appreciate your interest and look forward to transforming your space.</p>
-            <p>Warm regards,<br><strong>The WallCraft Team</strong></p>
+            <p>Warm regards,<br><strong>The WallCrafter Team</strong></p>
           </div>
 
           <!-- Footer -->
           <div style="background-color:#f3e8ff; text-align:center; padding:16px;">
             <p style="margin:0; font-size:13px; color:#6b21a8;">
-              © ${new Date().getFullYear()} WallCraft • Designed with ❤️ in Canada
+              © ${new Date().getFullYear()} WallCrafter • Designed with ❤️ in Canada
             </p>
           </div>
         </div>
@@ -108,7 +112,7 @@ app.post("/api/contact", async (req, res) => {
 
     // ✅ Send admin email
     await tranEmailApi.sendTransacEmail({
-      sender: { email: process.env.EMAIL_FROM, name: "WallCraft Website" },
+      sender: { email: process.env.EMAIL_FROM, name: "WallCrafter Website" },
       to: [{ email: process.env.EMAIL_TO }],
       subject: `New Contact Form Message: ${service || "General Inquiry"}`,
       htmlContent: adminHtml,
@@ -116,9 +120,9 @@ app.post("/api/contact", async (req, res) => {
 
     // ✅ Send confirmation to user
     await tranEmailApi.sendTransacEmail({
-      sender: { email: process.env.EMAIL_FROM, name: "WallCraft" },
+      sender: { email: process.env.EMAIL_FROM, name: "WallCrafter" },
       to: [{ email }],
-      subject: "We’ve received your message at WallCraft!",
+      subject: "We’ve received your message at WallCrafter!",
       htmlContent: userHtml,
     });
 
