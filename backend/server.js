@@ -9,27 +9,25 @@ const app = express();
 
 console.log("✅ Loaded server.js at", new Date().toISOString());
 
-// ✅ CORS: allow all origins & handle preflight for /api/*
-app.use(cors()); // adds CORS headers for all responses
-app.options("/api/*", cors()); // handle OPTIONS preflight for any /api route
+// ✅ CORS for all routes
+app.use(cors());
 
-// ✅ Parse JSON body
+// ✅ Parse JSON
 app.use(express.json());
 
-
-
-// (keep the rest of your routes as they are)
-
-// ... your contact route, health route, root route, and app.listen exactly as before ...
-
-
-// Log every request so we can see it in Render logs
+// ✅ Optional logger (you can keep this)
 app.use((req, res, next) => {
   console.log(
     `[${new Date().toISOString()}] ${req.method} ${req.path} Origin: ${req.headers.origin}`
   );
   next();
 });
+
+// ✅ Handle preflight specifically for /api/contact
+app.options("/api/contact", cors(), (req, res) => {
+  res.sendStatus(204);
+});
+
 
 // ✅ Health check
 app.get("/api/health", (_, res) => {
