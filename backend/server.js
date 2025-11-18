@@ -1,4 +1,5 @@
 // backend/server.js
+// backend/server.js
 const express = require("express");
 const cors = require("cors");
 const SibApiV3Sdk = require("sib-api-v3-sdk");
@@ -8,19 +9,13 @@ const app = express();
 
 console.log("✅ Loaded server.js at", new Date().toISOString());
 
-// 🔓 CORS: allow all origins (you can tighten later)
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+// ✅ CORS: allow all origins & handle preflight for /api/*
+app.use(cors()); // adds CORS headers for all responses
+app.options("/api/*", cors()); // handle OPTIONS preflight for any /api route
 
-// 🔁 Handle preflight for the contact endpoint
-app.options("/api/contact", cors());
-
+// ✅ Parse JSON body
 app.use(express.json());
+
 
 
 // (keep the rest of your routes as they are)
@@ -36,26 +31,46 @@ app.use((req, res, next) => {
   next();
 });
 
-// Health check
-app.get("/api/health", (req, res) => {
+// ✅ Health check
+app.get("/api/health", (_, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });
 });
 
-// Dummy contact endpoint
-app.post("/api/contact", (req, res) => {
-  console.log("Contact body:", req.body);
-  return res.json({ success: true, message: "Dummy contact endpoint works" });
+// ✅ Simple root check
+app.get("/", (_, res) => {
+  res.json({ message: "✅ WallCrafter backend is working!" });
 });
 
-// Root route to be extra obvious
-app.get("/", (req, res) => {
-  res.json({ message: "✅ Minimal WallCrafter backend is running." });
+// ✅ Contact form route
+app.post("/api/contact", async (req, res) => {
+  const { name, email, phone, service, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+    const defaultClient = SibApiV3Sdk.ApiClient.instance;
+    defaultClient.authentications["api-key"].apiKey = process.env.BREVO_API_KEY;
+
+    const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
+
+    // ... all your adminHtml, userHtml, and sendTransacEmail calls ...
+
+    console.log("✅ Admin + User confirmation emails sent successfully!");
+    res.json({ success: true, message: "Emails sent successfully!" });
+  } catch (error) {
+    console.error("❌ Email failed:", error);
+    res
+      .status(500)
+      .json({ error: "Failed to send message", details: error.message });
+  }
 });
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () =>
-  console.log(`🚀 Minimal server running on port ${PORT}`)
-);
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
 
 
 
