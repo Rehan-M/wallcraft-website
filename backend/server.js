@@ -1,15 +1,28 @@
 // backend/server.js
 const express = require("express");
 const cors = require("cors");
+const SibApiV3Sdk = require("sib-api-v3-sdk");
 require("dotenv").config();
 
 const app = express();
 
-// 🔓 Allow all origins (for debugging)
-app.use(cors());
-app.options("*", cors());
+app.use(
+  cors({
+    origin: [
+      "https://wallcrafter.com",
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 app.use(express.json());
+
+// ... your contact route, health route, root route, and app.listen exactly as before ...
+
 
 // Log every request so we can see it in Render logs
 app.use((req, res, next) => {
