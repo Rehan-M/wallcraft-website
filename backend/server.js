@@ -6,20 +6,14 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(
-  cors({
-    origin: [
-      "https://wallcrafter.com",
-      "http://localhost:3000",
-      "http://localhost:5173",
-      "http://127.0.0.1:5173",
-    ],
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+console.log("✅ Loaded server.js at", new Date().toISOString());
+
+// 🔓 CORS: allow all origins (just for now while debugging)
+app.use(cors());
 
 app.use(express.json());
+
+// (keep the rest of your routes as they are)
 
 // ... your contact route, health route, root route, and app.listen exactly as before ...
 
