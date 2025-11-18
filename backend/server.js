@@ -8,10 +8,20 @@ const app = express();
 
 console.log("✅ Loaded server.js at", new Date().toISOString());
 
-// 🔓 CORS: allow all origins (just for now while debugging)
-app.use(cors());
+// 🔓 CORS: allow all origins (you can tighten later)
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+
+// 🔁 Handle preflight for the contact endpoint
+app.options("/api/contact", cors());
 
 app.use(express.json());
+
 
 // (keep the rest of your routes as they are)
 
