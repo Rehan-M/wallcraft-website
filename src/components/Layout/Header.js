@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronDown, Menu, X, PaintBucket } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
@@ -20,14 +20,14 @@ export default function Header() {
       }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
-            <img 
-              src="/logo.png" 
-              alt="WallCraft Logo" 
-              className="h-10 w-auto object-contain drop-shadow-md"
-          />
+            <img
+              src="/logo.png"
+              alt="WallCrafter Logo"
+              className="h-14 w-auto object-contain drop-shadow-lg transition-transform duration-300 hover:scale-105"
+            />
           </Link>
 
           {/* Desktop Menu */}
@@ -124,4 +124,3 @@ export default function Header() {
     </nav>
   );
 }
-

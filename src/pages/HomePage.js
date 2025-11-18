@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Star, Palette, Layers, Shield, Sparkles } from 'lucide-react';
-import { Link } from "react-router-dom";   // ✅ Correct import
+import { Link } from "react-router-dom";
 import '../elegantAnimations.css';
 
 export default function HomePage() {
@@ -16,7 +16,6 @@ export default function HomePage() {
         clients: Math.min(prev.clients + 3, 300)
       }));
     }, 50);
-    
     setTimeout(() => clearInterval(interval), 3000);
     return () => clearInterval(interval);
   }, []);
@@ -48,7 +47,7 @@ export default function HomePage() {
       <div className="relative h-screen overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-teal-900 opacity-90"></div>
 
-        {/* Background orbs */}
+        {/* Background Orbs */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-r from-pink-500 to-yellow-500 rounded-full opacity-20 blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-blue-500 to-green-500 rounded-full opacity-20 blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
@@ -56,12 +55,24 @@ export default function HomePage() {
 
         <div className="relative z-10 h-full flex items-center justify-center px-4">
           <div className="text-center text-white max-w-4xl">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-animate">
-              Transform Your Walls
+            
+            {/* ✨ Brand Heading with gradient + hover animation */}
+            <h1 className="text-7xl md:text-9xl font-extrabold mb-4 tracking-tight 
+              bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent 
+              hover:from-yellow-400 hover:via-pink-500 hover:to-red-500 transition-all duration-700 ease-in-out 
+              drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">
+              WallCrafter
             </h1>
+
+            {/* Subheading */}
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-animate">
+              Transform Your Walls
+            </h2>
+
             <p className="text-xl md:text-2xl mb-8">
               Innovative designs that bring life to your spaces
             </p>
+
             <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/gallery" className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold shadow-2xl hover:shadow-pink-500/50 text-white transition-all duration-300 hover:scale-105 shimmer-btn">
                 Explore Gallery
@@ -159,4 +170,5 @@ export default function HomePage() {
     </div>
   );
 }
+
 

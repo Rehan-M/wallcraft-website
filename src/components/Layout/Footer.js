@@ -10,10 +10,17 @@ export default function Footer() {
           {/* Logo / About */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="bg-white/20 p-2 rounded-lg">
-                <PaintBucket className="w-6 h-6" />
+              <div className="flex justify-between items-center h-20">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 cursor-pointer">
+            <img
+              src="/logo.png"
+              alt="WallCrafter Logo"
+              className="h-14 w-auto object-contain drop-shadow-lg transition-transform duration-300 hover:scale-105"
+            />
+          </Link>
               </div>
-              <span className="text-xl font-bold">WallCraft</span>
+              <span className="text-xl font-bold">WallCrafter</span>
             </div>
             <p className="text-white/80">
               Transforming spaces with innovative wall designs since 2010.
@@ -99,13 +106,13 @@ export default function Footer() {
                 <Linkedin className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-white/80">info@wallcraft.com</p>
+            <p className="text-white/80">info@WallCrafter.com</p>
             <p className="text-white/80">+1 (555) 123-4567</p>
           </div>
         </div>
 
         <div className="border-t border-white/20 pt-8 text-center text-white/60">
-          <p>&copy; 2025 WallCraft. All rights reserved.</p>
+          <p>&copy; 2025 WallCrafter. All rights reserved.</p>
         </div>
       </div>
     </footer>

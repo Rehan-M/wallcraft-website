@@ -22,22 +22,35 @@ export default function ContactPage() {
     setStatus("Sending...");
 
     try {
-      const res = await fetch("https://wallcraft-website-backend.onrender.com/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://wallcrafter-website-backend.onrender.com/api/contact",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+      let data = null;
+    try {
+      data = await res.json();
+    } catch (_) {
+      // ignore JSON parse error
+    }
 
       if (res.ok) {
         setStatus("Message sent successfully!");
         setFormData({ name: "", email: "", phone: "", service: "", message: "" });
       } else {
-        setStatus("Something went wrong. Please try again.");
-      }
-    } catch (err) {
-      setStatus("Error sending message.");
+        console.error("Server error:", res.status, data);
+      setStatus(
+        data?.error || "Something went wrong on the server. Please try again."
+      );
     }
-  };
+  } catch (err) {
+    console.error("Network error:", err);
+    setStatus("Error sending message. Please check your connection.");
+  }
+};
 
   return (
     <div className="min-h-screen pt-20 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
@@ -133,7 +146,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold">Email</p>
-                    <p className="text-gray-600">info@newage-store.com</p>
+                    <p className="text-gray-600">info@wallcrafter.com</p>
                   </div>
                 </div>
                 
@@ -143,7 +156,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold">Address</p>
-                    <p className="text-gray-600">38 Cattail Crescent, Hamilton, Ontario, L8B1Z6</p>
+                    <p className="text-gray-600"> Hamilton, Ontario, Canada </p>
                   </div>
                 </div>
               </div>
