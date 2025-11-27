@@ -163,14 +163,15 @@ app.post("/api/contact", async (req, res) => {
     console.log("✅ Admin + User confirmation emails sent successfully!");
     res.json({ success: true, message: "Emails sent successfully!" });
   } catch (error) {
-    console.error(
-      "❌ Email failed:",
-      error?.response?.text || error.message || error
-    );
-    res
-      .status(500)
-      .json({ error: "Failed to send message", details: error.message });
+    const brevoText = error?.response?.text;
+    console.error("❌ Email failed:", brevoText || error.message || error);
+  
+    res.status(500).json({
+      error: "Failed to send message",
+      details: brevoText || error.message || "Unknown error",
+    });
   }
+  
 });
 
 const PORT = process.env.PORT || 10000;
