@@ -7,10 +7,24 @@ import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
 import GalleryPage from "./pages/GalleryPage";
 import ContactPage from "./pages/ContactPage";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
+
+      {/* 🔥 Global Toast Component */}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            borderRadius: "8px",
+            background: "#333",
+            color: "#fff",
+          },
+        }}
+      />
+
       {/* Header always visible */}
       <Header />
 

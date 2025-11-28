@@ -107,7 +107,7 @@ export default function Footer() {
               </button>
             </div>
             <p className="text-white/80">info@WallCrafter.com</p>
-            <p className="text-white/80">+1 (555) 123-4567</p>
+            <p className="text-white/80">+1 (416) 820-6060</p>
           </div>
         </div>
 
