@@ -14,14 +14,14 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const loadingToast = toast.loading("Sending your message...");
+    const loadingId = toast.loading("Sending your message...");
 
     try {
       const res = await fetch(
@@ -36,35 +36,26 @@ export default function ContactPage() {
       let data = null;
       try {
         data = await res.json();
-      } catch (_) {}
+      } catch (_) {
+        // ignore parse errors
+      }
 
-      toast.dismiss(loadingToast);
+      toast.dismiss(loadingId);
 
       if (res.ok) {
         toast.success("Message sent successfully! 🎉");
-
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          service: "",
-          message: "",
-        });
+        setFormData({ name: "", email: "", phone: "", service: "", message: "" });
       } else {
         console.error("Server error:", res.status, data);
-
-        toast.error(
-          data?.error || "Something went wrong. Please try again later."
-        );
+        toast.error(data?.error || "Something went wrong. Please try again.");
       }
     } catch (err) {
       console.error("Network error:", err);
-
-      toast.dismiss(loadingToast);
+      toast.dismiss(loadingId);
       toast.error("Network error — please check your connection.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
 
   return (
@@ -131,8 +122,78 @@ export default function ContactPage() {
                   onChange={handleChange}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-purple-500 focus:outline-none transition-colors"
                   required
-                ></textarea>
+                />
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
+                  className={`w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:shadow-lg transform hover:scale-105 transition-all duration-300 ${
+                    isSubmitting ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* CONTACT DETAILS */}
+          <div>
+            <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
+              <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4 group">
+                  <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-3 rounded-lg text-white group-hover:scale-110 transition-transform">
+                    <Phone className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Phone</p>
+                    <p className="text-gray-600">+1 (416) 820-6060</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 group">
+                  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-3 rounded-lg text-white group-hover:scale-110 transition-transform">
+                    <Mail className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Email</p>
+                    <p className="text-gray-600">info@wallcrafter.com</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 group">
+                  <div className="bg-gradient-to-r from-green-500 to-emerald-500 p-3 rounded-lg text-white group-hover:scale-110 transition-transform">
+                    <MapPin className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Address</p>
+                    <p className="text-gray-600">Hamilton, Ontario, Canada</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl p-8 shadow-xl">
+              <h3 className="text-xl font-bold mb-4">Business Hours</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span>Monday - Friday</span>
+                  <span>9:00 AM - 6:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Saturday</span>
+                  <span>10:00 AM - 4:00 PM</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Sunday</span>
+                  <span>10:00 AM - 4:00 PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
