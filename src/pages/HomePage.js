@@ -6,7 +6,6 @@ import '../elegantAnimations.css';
 export default function HomePage() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [counters, setCounters] = useState({ projects: 0, years: 0, clients: 0 });
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   // Counter animation
   useEffect(() => {
@@ -29,19 +28,6 @@ export default function HomePage() {
     return () => clearInterval(testimonialInterval);
   }, []);
 
-  // Mouse movement tracking for parallax & 3D tilt
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const { innerWidth, innerHeight } = window;
-      setMousePos({
-        x: (e.clientX / innerWidth - 0.5) * 20,
-        y: (e.clientY / innerHeight - 0.5) * 20
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   const testimonials = [
     { name: 'Sarah Johnson', text: 'Transformed our living room completely! The attention to detail was exceptional.', rating: 5 },
     { name: 'Mike Chen', text: 'Professional team, stunning results. Our office looks incredible now!', rating: 5 },
@@ -59,69 +45,37 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <div className="relative h-screen overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-teal-900 opacity-95"></div>
-
-        {/* Animated wall tiles with parallax */}
-        <div
-          className="absolute inset-0 grid grid-cols-20 grid-rows-12 gap-1 animate-wallPattern"
-          style={{
-            transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`
-          }}
-        >
-          {Array.from({ length: 240 }).map((_, idx) => (
-            <div key={idx} className="bg-white/5 rounded shadow-sm animate-pulse-slow"></div>
-          ))}
+        {/* Animated Background Orbs */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-r from-pink-500 to-yellow-500 rounded-full opacity-20 blur-3xl animate-pulse-slow"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-blue-500 to-green-500 rounded-full opacity-20 blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
         </div>
 
-        {/* Floating sparkles with parallax */}
+        {/* Floating Sparkles */}
         <div className="absolute inset-0">
           {Array.from({ length: 30 }).map((_, idx) => (
             <div
               key={idx}
-              className="w-2 h-2 bg-yellow-300 rounded-full opacity-70 animate-float"
+              className="w-2 h-2 bg-yellow-300 rounded-full absolute animate-float"
               style={{
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                transform: `translate3d(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px, 0)`
+                animationDelay: `${Math.random() * 5}s`
               }}
             ></div>
           ))}
         </div>
 
-        {/* Hero text with 3D tilt */}
         <div className="relative z-10 h-full flex items-center justify-center px-4">
-          <div
-            className="text-center text-white max-w-4xl transition-transform duration-300"
-            style={{
-              transform: `rotateY(${mousePos.x * 0.5}deg) rotateX(${-mousePos.y * 0.5}deg)`
-            }}
-          >
+          <div className="text-center text-white max-w-4xl transition-transform">
             <h1 className="text-7xl md:text-9xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent hover:from-yellow-400 hover:via-pink-500 hover:to-red-500 transition-all duration-700 ease-in-out drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">
               WallCrafter
             </h1>
             <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-animate">Transform Your Walls</h2>
             <p className="text-xl md:text-2xl mb-8">Innovative designs that bring life to your spaces</p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link
-                to="/gallery"
-                className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold shadow-2xl hover:shadow-pink-500/50 text-white transition-all duration-300 hover:scale-105 shimmer-btn"
-                style={{
-                  transform: `rotateY(${mousePos.x * 0.3}deg) rotateX(${-mousePos.y * 0.3}deg)`
-                }}
-              >
-                Explore Gallery
-              </Link>
-              <Link
-                to="/contact"
-                className="px-8 py-4 bg-transparent border-2 border-white rounded-full font-semibold hover:bg-white hover:text-purple-900 transition-all duration-300 hover:scale-105"
-                style={{
-                  transform: `rotateY(${mousePos.x * 0.3}deg) rotateX(${-mousePos.y * 0.3}deg)`
-                }}
-              >
-                Get Quote
-              </Link>
+              <Link to="/gallery" className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold shadow-2xl hover:shadow-pink-500/50 text-white transition-all duration-300 hover:scale-105 shimmer-btn">Explore Gallery</Link>
+              <Link to="/contact" className="px-8 py-4 bg-transparent border-2 border-white rounded-full font-semibold hover:bg-white hover:text-purple-900 transition-all duration-300 hover:scale-105">Get Quote</Link>
             </div>
           </div>
         </div>
@@ -155,10 +109,10 @@ export default function HomePage() {
           <h2 className="text-4xl font-bold text-center mb-12 gradient-animate">Our Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, idx) => (
-              <div key={idx} className="group relative transform transition-all duration-500 hover:-translate-y-2 hover:scale-105">
-                <div className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-xl from-purple-500 to-pink-500"></div>
-                <div className="relative bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-500">
-                  <div className={`bg-gradient-to-r ${service.color} p-3 rounded-xl inline-block mb-4 text-white`}>
+              <div key={idx} className="group relative hover-lift transition-transform">
+                <div className={`absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl blur-xl ${service.color}`}></div>
+                <div className="relative bg-white p-6 rounded-2xl shadow-lg">
+                  <div className={`p-3 rounded-xl inline-block mb-4 text-white bg-gradient-to-r ${service.color}`}>
                     {service.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
@@ -210,3 +164,4 @@ export default function HomePage() {
     </div>
   );
 }
+
