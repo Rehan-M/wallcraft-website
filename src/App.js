@@ -15,15 +15,29 @@ export default function App() {
 
       {/* 🔥 Global Toast Component */}
       <Toaster
-        position="top-right"
-        toastOptions={{
-          style: {
-            borderRadius: "8px",
-            background: "#333",
-            color: "#fff",
-          },
-        }}
-      />
+  position="top-right"
+  toastOptions={{
+    duration: 3000,
+    style: {
+      borderRadius: "10px",
+      background: "#1F2937",
+      color: "#fff",
+      padding: "10px 14px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+    },
+    success: {
+      style: {
+        background: "#10B981", // green
+      },
+    },
+    error: {
+      style: {
+        background: "#EF4444", // red
+      },
+    },
+  }}
+/>
+
 
       {/* Header always visible */}
       <Header />

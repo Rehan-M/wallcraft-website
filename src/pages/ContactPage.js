@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineLoading3Quarters } from "react-icons/ai";
+
+
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -21,7 +25,12 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const loadingId = toast.loading("Sending your message...");
+    const loadingToast = toast.loading(
+      <div className="flex items-center gap-2">
+        <AiOutlineLoading3Quarters className="animate-spin" size={20} />
+        <span>Sending message…</span>
+      </div>
+    );
 
     try {
       const res = await fetch(
@@ -43,16 +52,34 @@ export default function ContactPage() {
       toast.dismiss(loadingId);
 
       if (res.ok) {
-        toast.success("Message sent successfully! 🎉");
+        toast.success(
+          <div className="flex items-center gap-2">
+            <AiOutlineCheckCircle size={20} />
+            <span>Message sent successfully!</span>
+          </div>
+        );
+        
         setFormData({ name: "", email: "", phone: "", service: "", message: "" });
       } else {
-        console.error("Server error:", res.status, data);
-        toast.error(data?.error || "Something went wrong. Please try again.");
+        
+        toast.error(
+          <div className="flex items-center gap-2">
+            <AiOutlineCloseCircle size={20} />
+            <span>Failed to send message. Try again.</span>
+          </div>
+        );
+        
       }
     } catch (err) {
-      console.error("Network error:", err);
+      
       toast.dismiss(loadingId);
-      toast.error("Network error — please check your connection.");
+      toast.error(
+        <div className="flex items-center gap-2">
+          <AiOutlineCloseCircle size={20} />
+          <span>Failed to send message. Try again.</span>
+        </div>
+      );
+      
     } finally {
       setIsSubmitting(false);
     }
