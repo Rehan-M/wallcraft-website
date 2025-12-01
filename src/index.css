@@ -1,11 +1,18 @@
+/* src/index.css — restored, clean, no heavy animations but restores colors & hover effects */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Basic reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
 }
 
 body {
@@ -14,9 +21,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(180deg, #f7f7fb 0%, #f3f2fb 50%, #f9fbff 100%);
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Simple gradient animation */
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ------------------------
+   Gradient text for headings (gentle)
+   Keep this — used on main headings
+-------------------------*/
 .gradient-animate {
   background: linear-gradient(90deg, #9333ea, #db2777, #9333ea);
   background-size: 200% auto;
@@ -28,15 +46,71 @@ body {
 
 @keyframes gradient {
   0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 
-/* Hover lift effect */
+/* ------------------------
+   Hover lift (cards)
+-------------------------*/
 .hover-lift {
-  transition: all 0.3s ease;
+  transition: all 0.28s cubic-bezier(.4,0,.2,1);
+  will-change: transform, box-shadow;
 }
-
 .hover-lift:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(147, 51, 234, 0.2);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.12);
 }
+
+/* ------------------------
+   CTA shimmer (subtle)
+   Keeps the button looking premium without heavy animation
+-------------------------*/
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -110%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.00), rgba(255,255,255,0.18), rgba(255,255,255,0.00));
+  transform: skewX(-20deg);
+  transition: left 0.9s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+
+.shimmer-btn:hover::before {
+  left: 120%;
+}
+
+/* ------------------------
+   Small helper utilities
+-------------------------*/
+/* subtle drop shadow for clipped text / headings */
+.drop-subtle {
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.08));
+}
+
+/* ensure clickable visual feedback */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Small responsive padding helper used sitewide */
+.container-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .container-padding { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* keep default Tailwind utilities intact — no animation overrides here */
+
+
