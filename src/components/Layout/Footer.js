@@ -1,5 +1,5 @@
 import React from "react";
-import { Facebook, Instagram, Twitter, Linkedin, PaintBucket } from "lucide-react";
+import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {

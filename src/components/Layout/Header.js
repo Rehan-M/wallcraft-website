@@ -79,6 +79,12 @@ export default function Header() {
                   >
                     Wainscoting Designs
                   </Link>
+                  <Link
+                    to="/gallery-3d"
+                    className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
+                  >
+                    3D Wall Designs
+                  </Link>
                 </div>
               )}
             </div>

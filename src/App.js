@@ -60,6 +60,7 @@ export default function App() {
           <Route path="/gallery-fluted" element={<GalleryPage category="fluted" />} />
           <Route path="/gallery-pvc" element={<GalleryPage category="pvc" />} />
           <Route path="/gallery-wainscoting" element={<GalleryPage category="wainscoting" />} />
+          <Route path="/gallery-3d" element={<GalleryPage category="3d" />} />
 
           {/* Contact */}
           <Route path="/contact" element={<ContactPage />} />

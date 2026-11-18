@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 import { Eye, X } from 'lucide-react';
+import wall3d1 from '../assets/images/3D_wall/3D-1.jpeg';
+import wall3d2 from '../assets/images/3D_wall/3D-2.jpeg';
+import wall3d3 from '../assets/images/3D_wall/3D-3.jpeg';
+import wall3d4 from '../assets/images/3D_wall/3D-4.jpeg';
+import wall3d5 from '../assets/images/3D_wall/3D-5.jpeg';
+import wall3d6 from '../assets/images/3D_wall/3D-6.jpeg';
+import wall3d7 from '../assets/images/3D_wall/3D-7.jpeg';
+import wall3d8 from '../assets/images/3D_wall/3D-8.jpeg';
+import wall3d9 from '../assets/images/3D_wall/3D-9.jpeg';
+import wall3d10 from '../assets/images/3D_wall/3D-10.jpeg';
+import wall3d11 from '../assets/images/3D_wall/3D-11.jpeg';
 
 export default function GalleryPage({ category = 'all' }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -55,26 +66,53 @@ export default function GalleryPage({ category = 'all' }) {
         image: 'https://i.pinimg.com/1200x/c1/e1/ac/c1e1acdfff1b287dd01de4998c771921.jpg' },
       { id: 9, title: 'Conference Room', category: 'Commercial', desc: 'Professional wainscoting for corporate settings',
         image: 'https://i.pinimg.com/736x/f1/cc/d3/f1ccd3df2e978ed9262c436c65c46713.jpg' }
+    ],
+    '3d': [
+      { id: 101, title: 'Geometric Accent Wall', category: 'Residential', desc: 'Bold 3D wall panels that add depth and dimension',
+        image: wall3d1 },
+      { id: 102, title: 'Modern Feature Wall', category: 'Residential', desc: 'Sculptural 3D design for a standout living space',
+        image: wall3d2 },
+      { id: 103, title: 'Textured Statement Wall', category: 'Commercial', desc: 'Eye-catching 3D panels for contemporary interiors',
+        image: wall3d3 },
+      { id: 104, title: 'Luxury 3D Panel Wall', category: 'Residential', desc: 'Premium dimensional wall design with rich texture',
+        image: wall3d4 },
+      { id: 105, title: 'Architectural Wall Art', category: 'Commercial', desc: '3D wall installation that transforms any room',
+        image: wall3d5 },
+      { id: 106, title: 'Layered Relief Design', category: 'Residential', desc: 'Multi-dimensional panels for elegant spaces',
+        image: wall3d6 },
+      { id: 107, title: 'Contemporary 3D Wall', category: 'Commercial', desc: 'Sleek dimensional panels for modern interiors',
+        image: wall3d7 },
+      { id: 108, title: 'Sculpted Wall Panel', category: 'Residential', desc: 'Artistic 3D wall design with striking depth',
+        image: wall3d8 },
+      { id: 109, title: 'Dimensional Accent Wall', category: 'Commercial', desc: 'Dynamic 3D panels that elevate the space',
+        image: wall3d9 },
+      { id: 110, title: 'Wave Pattern Wall', category: 'Residential', desc: 'Fluid 3D wall design with flowing texture',
+        image: wall3d10 },
+      { id: 111, title: 'Premium 3D Feature Wall', category: 'Commercial', desc: 'High-impact dimensional wall for luxury spaces',
+        image: wall3d11 }
     ]
   };
 
   // Build the image list by category
   let images = [];
   if (category === 'all') {
-    images = [...galleryImages.fluted, ...galleryImages.pvc, ...galleryImages.wainscoting];
+    images = [...galleryImages.fluted, ...galleryImages.pvc, ...galleryImages.wainscoting, ...galleryImages['3d']];
   } else if (category === 'fluted') {
     images = galleryImages.fluted;
   } else if (category === 'pvc') {
     images = galleryImages.pvc;
   } else if (category === 'wainscoting') {
     images = galleryImages.wainscoting;
+  } else if (category === '3d') {
+    images = galleryImages['3d'];
   }
 
   const categoryTitles = {
     all: 'Our Gallery',
     fluted: 'Fluted Panel Designs',
     pvc: 'PVC Panel Designs',
-    wainscoting: 'Wainscoting Designs'
+    wainscoting: 'Wainscoting Designs',
+    '3d': '3D Wall Designs'
   };
 
   // No filtering by Residential/Commercial anymore

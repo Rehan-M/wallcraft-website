@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import toast from "react-hot-toast";
-import { toast } from "react-hot-toast";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
@@ -49,7 +48,7 @@ export default function ContactPage() {
         // ignore parse errors
       }
 
-      toast.dismiss(loadingId);
+      toast.dismiss(loadingToast);
 
       if (res.ok) {
         toast.success(
@@ -72,7 +71,7 @@ export default function ContactPage() {
       }
     } catch (err) {
       
-      toast.dismiss(loadingId);
+      toast.dismiss(loadingToast);
       toast.error(
         <div className="flex items-center gap-2">
           <AiOutlineCloseCircle size={20} />
