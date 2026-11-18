@@ -41,13 +41,6 @@ export default function ContactPage() {
         }
       );
 
-      let data = null;
-      try {
-        data = await res.json();
-      } catch (_) {
-        // ignore parse errors
-      }
-
       toast.dismiss(loadingToast);
 
       if (res.ok) {
