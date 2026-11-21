@@ -90,13 +90,22 @@ export default function GalleryPage({ category = 'all' }) {
         image: wall3d10 },
       { id: 111, title: 'Premium 3D Feature Wall', category: 'Commercial', desc: 'High-impact dimensional wall for luxury spaces',
         image: wall3d11 }
+    ],
+    stencil: [
+      // Add stencil images under src/assets/images/stencil_wall/ then import them here
     ]
   };
 
   // Build the image list by category
   let images = [];
   if (category === 'all') {
-    images = [...galleryImages.fluted, ...galleryImages.pvc, ...galleryImages.wainscoting, ...galleryImages['3d']];
+    images = [
+      ...galleryImages.fluted,
+      ...galleryImages.pvc,
+      ...galleryImages.wainscoting,
+      ...galleryImages['3d'],
+      ...galleryImages.stencil,
+    ];
   } else if (category === 'fluted') {
     images = galleryImages.fluted;
   } else if (category === 'pvc') {
@@ -105,6 +114,8 @@ export default function GalleryPage({ category = 'all' }) {
     images = galleryImages.wainscoting;
   } else if (category === '3d') {
     images = galleryImages['3d'];
+  } else if (category === 'stencil') {
+    images = galleryImages.stencil;
   }
 
   const categoryTitles = {
@@ -112,7 +123,8 @@ export default function GalleryPage({ category = 'all' }) {
     fluted: 'Fluted Panel Designs',
     pvc: 'PVC Panel Designs',
     wainscoting: 'Wainscoting Designs',
-    '3d': '3D Wall Designs'
+    '3d': '3D Wall Designs',
+    stencil: 'Stencil Wall Designs'
   };
 
   // No filtering by Residential/Commercial anymore

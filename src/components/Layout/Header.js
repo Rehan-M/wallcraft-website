@@ -54,7 +54,7 @@ export default function Header() {
               </Link>
 
               {galleryDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 bg-white border-2 border-pink-500 rounded-lg shadow-xl w-60 z-50">
+                <div className="absolute top-full left-0 mt-1 bg-white border-2 border-pink-500 rounded-lg shadow-xl w-64 max-h-80 overflow-y-auto z-50">
                   <Link
                     to="/gallery"
                     className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
@@ -84,6 +84,12 @@ export default function Header() {
                     className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
                   >
                     3D Wall Designs
+                  </Link>
+                  <Link
+                    to="/gallery-stencil"
+                    className="block px-4 py-2 text-purple-700 hover:bg-pink-50"
+                  >
+                    Stencil Wall Designs
                   </Link>
                 </div>
               )}

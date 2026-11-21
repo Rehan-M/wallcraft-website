@@ -61,6 +61,7 @@ export default function App() {
           <Route path="/gallery-pvc" element={<GalleryPage category="pvc" />} />
           <Route path="/gallery-wainscoting" element={<GalleryPage category="wainscoting" />} />
           <Route path="/gallery-3d" element={<GalleryPage category="3d" />} />
+          <Route path="/gallery-stencil" element={<GalleryPage category="stencil" />} />
 
           {/* Contact */}
           <Route path="/contact" element={<ContactPage />} />
