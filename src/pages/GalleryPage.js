@@ -11,6 +11,35 @@ import wall3d8 from '../assets/images/3D_wall/3D-8.jpeg';
 import wall3d9 from '../assets/images/3D_wall/3D-9.jpeg';
 import wall3d10 from '../assets/images/3D_wall/3D-10.jpeg';
 import wall3d11 from '../assets/images/3D_wall/3D-11.jpeg';
+import stencil1 from '../assets/images/Stencil_wall/St-1.jpeg';
+import stencil2 from '../assets/images/Stencil_wall/ST-2.jpeg';
+import stencil3 from '../assets/images/Stencil_wall/ST-3.jpeg';
+import stencil4 from '../assets/images/Stencil_wall/ST-4.jpeg';
+import stencil5 from '../assets/images/Stencil_wall/ST-5.jpeg';
+import stencil6 from '../assets/images/Stencil_wall/ST-6.jpeg';
+import stencil7 from '../assets/images/Stencil_wall/ST-7.jpeg';
+import stencil8 from '../assets/images/Stencil_wall/ST-8.jpeg';
+import stencil9 from '../assets/images/Stencil_wall/ST-9.jpeg';
+import stencil10 from '../assets/images/Stencil_wall/ST-10.jpeg';
+import stencil11 from '../assets/images/Stencil_wall/ST-11.jpeg';
+import stencil12 from '../assets/images/Stencil_wall/ST-12.jpeg';
+import stencil12b from '../assets/images/Stencil_wall/ST_12.jpeg';
+import stencil13 from '../assets/images/Stencil_wall/ST-13.jpeg';
+import stencil14 from '../assets/images/Stencil_wall/ST-14.jpeg';
+import stencil15 from '../assets/images/Stencil_wall/ST-15.jpeg';
+import stencil16 from '../assets/images/Stencil_wall/ST-16.jpeg';
+import stencil17 from '../assets/images/Stencil_wall/ST-17.jpeg';
+import stencil18 from '../assets/images/Stencil_wall/ST-18.jpeg';
+import stencil19 from '../assets/images/Stencil_wall/ST-19.jpeg';
+import stencil20 from '../assets/images/Stencil_wall/ST-20.jpeg';
+import stencil21 from '../assets/images/Stencil_wall/ST-21.jpeg';
+import stencil22 from '../assets/images/Stencil_wall/ST-22.jpeg';
+import stencil23 from '../assets/images/Stencil_wall/ST-23.jpeg';
+import stencil24 from '../assets/images/Stencil_wall/ST-24.jpeg';
+import stencil25 from '../assets/images/Stencil_wall/ST-25.jpeg';
+import stencil26 from '../assets/images/Stencil_wall/ST-26.jpeg';
+import stencil27 from '../assets/images/Stencil_wall/ST-27.jpeg';
+import stencil28 from '../assets/images/Stencil_wall/ST-28.jpeg';
 
 export default function GalleryPage({ category = 'all' }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -92,7 +121,64 @@ export default function GalleryPage({ category = 'all' }) {
         image: wall3d11 }
     ],
     stencil: [
-      // Add stencil images under src/assets/images/stencil_wall/ then import them here
+      { id: 201, title: 'Classic Stencil Accent', category: 'Residential', desc: 'Elegant stencil pattern that adds character to any wall',
+        image: stencil1 },
+      { id: 202, title: 'Modern Stencil Feature', category: 'Residential', desc: 'Bold stencil design for a standout living space',
+        image: stencil2 },
+      { id: 203, title: 'Decorative Wall Stencil', category: 'Commercial', desc: 'Artistic stencil work for contemporary interiors',
+        image: stencil3 },
+      { id: 204, title: 'Luxury Stencil Wall', category: 'Residential', desc: 'Premium stencil detailing with refined style',
+        image: stencil4 },
+      { id: 205, title: 'Patterned Statement Wall', category: 'Commercial', desc: 'Eye-catching stencil installation that transforms a room',
+        image: stencil5 },
+      { id: 206, title: 'Ornate Stencil Design', category: 'Residential', desc: 'Detailed stencil art for elegant interiors',
+        image: stencil6 },
+      { id: 207, title: 'Contemporary Stencil Wall', category: 'Commercial', desc: 'Clean stencil patterns for modern spaces',
+        image: stencil7 },
+      { id: 208, title: 'Artistic Accent Wall', category: 'Residential', desc: 'Custom stencil design with striking visual impact',
+        image: stencil8 },
+      { id: 209, title: 'Textured Stencil Feature', category: 'Commercial', desc: 'Layered stencil look that elevates the space',
+        image: stencil9 },
+      { id: 210, title: 'Floral Stencil Wall', category: 'Residential', desc: 'Soft stencil motifs for a warm, inviting feel',
+        image: stencil10 },
+      { id: 211, title: 'Geometric Stencil Panel', category: 'Commercial', desc: 'Structured stencil patterns for polished interiors',
+        image: stencil11 },
+      { id: 212, title: 'Boutique Stencil Wall', category: 'Residential', desc: 'Stylish stencil design for unique feature walls',
+        image: stencil12 },
+      { id: 213, title: 'Custom Stencil Accent', category: 'Commercial', desc: 'Tailored stencil artwork for distinctive spaces',
+        image: stencil12b },
+      { id: 214, title: 'Heritage Stencil Wall', category: 'Residential', desc: 'Timeless stencil patterns with classic charm',
+        image: stencil13 },
+      { id: 215, title: 'Studio Stencil Feature', category: 'Commercial', desc: 'Creative stencil design for inspiring interiors',
+        image: stencil14 },
+      { id: 216, title: 'Grand Stencil Wall', category: 'Residential', desc: 'Large-scale stencil pattern for dramatic impact',
+        image: stencil15 },
+      { id: 217, title: 'Minimal Stencil Accent', category: 'Commercial', desc: 'Subtle stencil detailing for modern spaces',
+        image: stencil16 },
+      { id: 218, title: 'Royal Stencil Design', category: 'Residential', desc: 'Rich stencil motifs for luxurious rooms',
+        image: stencil17 },
+      { id: 219, title: 'Gallery Stencil Wall', category: 'Commercial', desc: 'Exhibition-style stencil art for bold interiors',
+        image: stencil18 },
+      { id: 220, title: 'Garden Stencil Feature', category: 'Residential', desc: 'Nature-inspired stencil patterns for calm spaces',
+        image: stencil19 },
+      { id: 221, title: 'Urban Stencil Wall', category: 'Commercial', desc: 'Contemporary stencil looks for city interiors',
+        image: stencil20 },
+      { id: 222, title: 'Signature Stencil Accent', category: 'Residential', desc: 'Signature stencil design that defines the room',
+        image: stencil21 },
+      { id: 223, title: 'Premium Stencil Feature', category: 'Commercial', desc: 'High-end stencil installation for luxury spaces',
+        image: stencil22 },
+      { id: 224, title: 'Vintage Stencil Wall', category: 'Residential', desc: 'Classic stencil charm with a vintage feel',
+        image: stencil23 },
+      { id: 225, title: 'Luxe Pattern Wall', category: 'Commercial', desc: 'Opulent stencil patterns for upscale interiors',
+        image: stencil24 },
+      { id: 226, title: 'Soft Motif Stencil', category: 'Residential', desc: 'Gentle stencil motifs for serene living spaces',
+        image: stencil25 },
+      { id: 227, title: 'Bold Stencil Statement', category: 'Commercial', desc: 'High-contrast stencil design that stands out',
+        image: stencil26 },
+      { id: 228, title: 'Crafted Stencil Wall', category: 'Residential', desc: 'Hand-crafted stencil style for personalized spaces',
+        image: stencil27 },
+      { id: 229, title: 'Finale Stencil Feature', category: 'Commercial', desc: 'Finishing stencil design for a complete look',
+        image: stencil28 }
     ]
   };
 
