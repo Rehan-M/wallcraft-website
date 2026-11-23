@@ -40,6 +40,23 @@ import stencil25 from '../assets/images/Stencil_wall/ST-25.jpeg';
 import stencil26 from '../assets/images/Stencil_wall/ST-26.jpeg';
 import stencil27 from '../assets/images/Stencil_wall/ST-27.jpeg';
 import stencil28 from '../assets/images/Stencil_wall/ST-28.jpeg';
+import pvc1 from '../assets/images/pvc/PV-1.jpeg';
+import pvc2 from '../assets/images/pvc/PV-2.jpg';
+import pvc3 from '../assets/images/pvc/PV-3.jpg';
+import pvc4 from '../assets/images/pvc/PV-4.jpg';
+import pvc5 from '../assets/images/pvc/PV-5.jpg';
+import pvc6 from '../assets/images/pvc/PV-6.jpg';
+import pvc7 from '../assets/images/pvc/PV-7.jpg';
+import pvc8 from '../assets/images/pvc/PV-8.jpg';
+import pvc9 from '../assets/images/pvc/PV-9.jpg';
+import pvc10 from '../assets/images/pvc/PV-10.jpg';
+import pvc11 from '../assets/images/pvc/PV-11.jpg';
+import pvc12 from '../assets/images/pvc/PV-12.jpg';
+import pvc13 from '../assets/images/pvc/PV-13.jpg';
+import pvc14 from '../assets/images/pvc/PV-14.jpg';
+import pvc15 from '../assets/images/pvc/PV-15.jpg';
+import pvc16 from '../assets/images/pvc/PV-16.jpg';
+import pvcVideo from '../assets/images/pvc/pvc-video.mp4';
 
 export default function GalleryPage({ category = 'all' }) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -67,14 +84,40 @@ export default function GalleryPage({ category = 'all' }) {
         image: 'https://i.pinimg.com/736x/2f/01/d2/2f01d2fce10c71cc10c6aae3d14139e4.jpg' }
     ],
     pvc: [
-      { id: 5, title: 'Kitchen Backsplash', category: 'Residential', desc: 'Waterproof PVC panels perfect for kitchens',
-        image: 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=800&q=80' },
-      { id: 6, title: 'Bathroom Walls', category: 'Residential', desc: 'Moisture-resistant PVC for bathroom elegance',
-        image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80' },
-      { id: 7, title: 'Restaurant Interior', category: 'Commercial', desc: 'Durable PVC panels for high-traffic areas',
-        image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80' },
-      { id: 8, title: 'Retail Store', category: 'Commercial', desc: 'Colorful PVC designs for brand identity',
-        image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80' }
+      { id: 301, title: 'PVC Accent Wall', category: 'Residential', desc: 'Modern PVC panels that elevate everyday living spaces',
+        image: pvc1 },
+      { id: 302, title: 'Sleek PVC Feature Wall', category: 'Residential', desc: 'Clean PVC design for a polished interior look',
+        image: pvc2 },
+      { id: 303, title: 'Durable PVC Installation', category: 'Commercial', desc: 'Hard-wearing PVC panels for high-traffic areas',
+        image: pvc3 },
+      { id: 304, title: 'Textured PVC Wall', category: 'Residential', desc: 'Rich PVC texture that adds depth and style',
+        image: pvc4 },
+      { id: 305, title: 'Premium PVC Panel Wall', category: 'Commercial', desc: 'Premium PVC finish for professional interiors',
+        image: pvc5 },
+      { id: 306, title: 'Contemporary PVC Design', category: 'Residential', desc: 'Contemporary PVC panels for modern homes',
+        image: pvc6 },
+      { id: 307, title: 'Waterproof PVC Wall', category: 'Residential', desc: 'Moisture-resistant PVC ideal for kitchens and baths',
+        image: pvc7 },
+      { id: 308, title: 'Bold PVC Statement Wall', category: 'Commercial', desc: 'Bold PVC design that creates a strong focal point',
+        image: pvc8 },
+      { id: 309, title: 'Classic PVC Panel Look', category: 'Residential', desc: 'Classic PVC paneling with timeless appeal',
+        image: pvc9 },
+      { id: 310, title: 'Bright PVC Accent', category: 'Commercial', desc: 'Bright PVC panels that refresh commercial spaces',
+        image: pvc10 },
+      { id: 311, title: 'Layered PVC Feature', category: 'Residential', desc: 'Layered PVC detailing for a custom feature wall',
+        image: pvc11 },
+      { id: 312, title: 'Minimal PVC Wall', category: 'Commercial', desc: 'Minimal PVC design for clean, modern interiors',
+        image: pvc12 },
+      { id: 313, title: 'Warm Tone PVC Wall', category: 'Residential', desc: 'Warm-toned PVC panels for inviting rooms',
+        image: pvc13 },
+      { id: 314, title: 'Luxury PVC Finish', category: 'Commercial', desc: 'Luxury PVC finish for upscale interiors',
+        image: pvc14 },
+      { id: 315, title: 'Compact PVC Accent', category: 'Residential', desc: 'Compact PVC accent wall for smaller spaces',
+        image: pvc15 },
+      { id: 316, title: 'Signature PVC Feature', category: 'Commercial', desc: 'Signature PVC feature wall with lasting impact',
+        image: pvc16 },
+      { id: 317, title: 'PVC Installation Video', category: 'Commercial', desc: 'Watch a PVC wall installation come to life',
+        image: pvcVideo, type: 'video' }
     ],
     wainscoting: [
       { id: 1, title: 'Classic Dining Room', category: 'Residential', desc: 'Traditional wainscoting for timeless elegance',
@@ -246,15 +289,25 @@ export default function GalleryPage({ category = 'all' }) {
                 onClick={() => setSelectedImage(image)}
               >
                 <div className="h-64 overflow-hidden bg-gray-200">
-                  <img
-                    src={image.image}
-                    alt={image.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        'https://via.placeholder.com/800x600/9333ea/ffffff?text=WallCrafter';
-                    }}
-                  />
+                  {image.type === 'video' ? (
+                    <video
+                      src={image.image}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      muted
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <img
+                      src={image.image}
+                      alt={image.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          'https://via.placeholder.com/800x600/9333ea/ffffff?text=WallCrafter';
+                      }}
+                    />
+                  )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
@@ -292,12 +345,22 @@ export default function GalleryPage({ category = 'all' }) {
               >
                 <X className="w-8 h-8" />
               </button>
-              <div className="rounded-lg overflow-hidden bg-gray-900">
-                <img
-                  src={selectedImage.image}
-                  alt={selectedImage.title}
-                  className="w-full h-auto max-h-[80vh] object-contain"
-                />
+              <div className="rounded-lg overflow-hidden bg-gray-900" onClick={(e) => e.stopPropagation()}>
+                {selectedImage.type === 'video' ? (
+                  <video
+                    src={selectedImage.image}
+                    className="w-full h-auto max-h-[80vh] object-contain"
+                    controls
+                    autoPlay
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    src={selectedImage.image}
+                    alt={selectedImage.title}
+                    className="w-full h-auto max-h-[80vh] object-contain"
+                  />
+                )}
               </div>
               <div className="mt-4 text-white">
                 <h2 className="text-2xl font-bold">{selectedImage.title}</h2>
