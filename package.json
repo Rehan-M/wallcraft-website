@@ -18,7 +18,8 @@
     "server": "cd backend && node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch:assets": "node scripts/auto-commit-assets.js"
   },
   "eslintConfig": {
     "extends": [
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
+    "chokidar": "^3.6.0",
     "concurrently": "^9.2.1",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3"

@@ -67,21 +67,21 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 h-full flex items-center justify-center px-4">
-          <div className="text-center text-white max-w-4xl transition-transform">
+          <div className="text-center text-gray-700 max-w-4xl transition-transform">
             <h1 className="text-7xl md:text-9xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent hover:from-yellow-400 hover:via-pink-500 hover:to-red-500 transition-all duration-700 ease-in-out drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">
               WallCrafter
             </h1>
             <h2 className="text-4xl md:text-6xl font-bold mb-6 gradient-animate">Transform Your Walls</h2>
-            <p className="text-xl md:text-2xl mb-8">Innovative designs that bring life to your spaces</p>
+            <p className="text-xl md:text-2xl mb-8 text-gray-600">Innovative designs that bring life to your spaces</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/gallery" className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full font-semibold shadow-2xl hover:shadow-pink-500/50 text-white transition-all duration-300 hover:scale-105 shimmer-btn">Explore Gallery</Link>
-              <Link to="/contact" className="px-8 py-4 bg-transparent border-2 border-white rounded-full font-semibold hover:bg-white hover:text-purple-900 transition-all duration-300 hover:scale-105">Get Quote</Link>
+              <Link to="/contact" className="px-8 py-4 bg-white text-purple-600 border-2 border-purple-600 rounded-full font-semibold shadow-lg hover:bg-purple-600 hover:text-white transition-all duration-300 hover:scale-105">Get Quote</Link>
             </div>
           </div>
         </div>
 
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown className="w-8 h-8 text-white" />
+          <ChevronDown className="w-8 h-8 text-purple-600" />
         </div>
       </div>
 
